@@ -15,7 +15,8 @@ income <- income_raw_long %>%
       mutate( year = substr(variable,2,5),
               state_abb = ifelse(!is.na(state.abb[match(State,state.name)]),
                                         state.abb[match(State,state.name)],
-                                        as.character(State))) %>%
+                                        as.character(State)),
+              year = as.numeric(year)) %>%
       select(state_abb,year,value) 
                         
       
@@ -36,13 +37,13 @@ election_raw <- read.csv('election_raw.csv',header = TRUE,stringsAsFactors = FAL
 
 #calculate margin and prepare the df ready to be merged with relative_income
 election <- election_raw %>%
-      mutate(margin = Republican - Democratic) %>%
-      transform(year = as.character(year)) %>%
+      mutate(margin = Republican_percent - Democratic_percent,
+             number_margin = Republican_number-Democratic_number) %>%
       rename(state_abb = State)
 
 
 
 #JOIN election and relative income
-output <- left_join(election,relative_income,by = c('state_abb','year'))
+output <- left_join(election,relative_income,by = c('state_abb','year' = ))
 write.csv(output,'plot_df.csv',row.names = FALSE)
 
