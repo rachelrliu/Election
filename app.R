@@ -5,7 +5,7 @@ library(dplyr)
 df <- read.csv("plot_df.csv", stringsAsFactors = F)
 
 ui <- fluidPage(
-      headerPanel("AactionButton test"),
+      headerPanel(""),
       h4(textOutput("president")),
       h4(textOutput("state_num")),
       plotlyOutput('mainplot'),
@@ -45,9 +45,10 @@ server <- function(input,output){
       #Generate # Unpredictable state
       state_num <- reactive({
            states <- election() %>% 
-                  filter( (relative_personal_income>1 & margin_percent < 0) |
-                           (relative_personal_income <1 & margin_percent >0)) 
-           nrow(states)
+                  filter( (relative_personal_income > 1 & margin_percent < 0) |
+                           (relative_personal_income < 1 & margin_percent > 0)) 
+           nstates = paste("Number of 'Irregular States':",nrow(states))
+           nstates
       })
       
       output$state_num <- renderText({state_num()})
