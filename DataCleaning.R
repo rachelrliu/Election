@@ -1,7 +1,7 @@
 library(dplyr)
 library(reshape2)
 
-setwd('/Users/ruiqiliu/Desktop/MSBA/Others/USElection')
+setwd('')
 
 ###Read in per capita personal income data, the data can be downloaded from FRED at:
 ###https://fred.stlouisfed.org/tags/series?t=annual%3Bper+capita%3Bpersonal+income%3Bstate&ob=pv&od=desc
